@@ -2,7 +2,7 @@ package com.nosql.entidades;
 
 public class Usuario {
 
-    private String nombre, apellido, email, password, username;
+    private String nombre, apellido, email, password, username, rid;
 
     public Usuario() {
     }
@@ -13,6 +13,15 @@ public class Usuario {
         this.email = email;
         this.password = password;
         this.username = username;
+    }
+
+    public Usuario(String nombre, String apellido, String email, String password, String rid) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.rid = rid;
     }
 
     public String getNombre() {
@@ -47,4 +56,19 @@ public class Usuario {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRid() {
+        return rid;
+    }
+
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
 }
