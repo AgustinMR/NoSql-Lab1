@@ -3,6 +3,8 @@ package com.nosql.controllers;
 import com.nosql.entidades.Usuario;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("usuarios")
 @CrossOrigin
