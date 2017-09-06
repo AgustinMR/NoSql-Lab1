@@ -41,7 +41,7 @@ public class StartUp {
         ODatabaseDocumentTx db = new ODatabaseDocumentTx("plocal:/databases/lab1nosql");
         if (!db.exists()) db.create();
         if (db.isClosed()) db.open("admin", "admin");
-        if (!db.getMetadata().getSchema().existsClass("Usaurio")) db.getMetadata().getSchema().createClass("Usaurio");
+        if (!db.getMetadata().getSchema().existsClass("Usuario")) db.getMetadata().getSchema().createClass("Usuario");
     }
 
 }

@@ -83,12 +83,12 @@ public class DALUsuario implements IDALUsuario {
     public Usuario getUsuario(String username) {
         ODatabaseDocumentTx database = new ODatabaseDocumentTx("plocal:/databases/lab1nosql");
         ODatabase db = database.activateOnCurrentThread().open("admin", "admin");
-        ODocument od = (ODocument) db.query(new OSQLSynchQuery<ODocument>("SELECT FROM Usuario WHERE username=" + username)).get(0);
+        ODocument od = (ODocument) db.query(new OSQLSynchQuery("SELECT FROM Usuario WHERE username=" + username)).get(0);
         return new Usuario(od.field("nombre"), od.field("apellido"), od.field("email"), od.field("password"), od.field("rid"));
     }
     
     private ODocument getUsuario(ODatabase db, String username) {
-        return (ODocument) db.query(new OSQLSynchQuery<ODocument>("SELECT FROM Usuario WHERE username=" + username)).get(0);
+        return (ODocument) db.query(new OSQLSynchQuery("SELECT FROM Usuario WHERE username=" + username)).get(0);
     }
 
     @Override
