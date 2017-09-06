@@ -4,49 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>TSI2 | Practico</title>
+    <title>Laboratorio1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/semantic.min.css">
     <script src="js/jquery.js"></script>
     <script src="js/semantic.min.js"></script>
 </head>
 
-<body style="background-color: #FCFCFC">
-<div class="ui secondary menu">
-    <h3 class="ui header item"><i class="grey home icon"></i>Practico1</h3>
-    <div class="right menu">
-        <p class="ui header small item grey" th:text="${username}"></p>
-        <form class="ui form item" action="/web/logout" method="post">
-            <button type="submit" class="ui button large basic item"><i class="sign orange out icon"></i>Logout</button>
-        </form>
-    </div>
+<body style="background-color: #333333">
+<div class="ui secondary inverted menu">
+    <h3 class="ui header item"><i class="grey home icon"></i>Taller de Bases de datos noSql</h3>
 </div>
 <div id="listado">
     <div class="ui text center aligned container">
-        <h1 class="ui header text icon title grey horizontal divider" style="padding: 16px"><i
-                class="users green icon"></i>Usuarios</h1>
+        <h1 class="ui header inverted text icon title grey horizontal divider" style="padding: 16px"><i
+                class="users green icon"></i>Listado de Usuarios</h1>
     </div>
-    <div class="ui left aligned basic secondary segment" style="padding: 16px;">
+    <div class="ui left aligned basic segment" style="padding: 16px; background-color: #272727">
         <div class="ui text container">
-            <div class="ui secondary menu grid">
-                <div class="row" style="padding: 7px">
-                    <div class="ui text container">
-                        <div class="ui fluid icon input">
-                            <i class="search link icon"></i>
-                            <input id="filtro" type="text" placeholder="Buscar por username...">
-                        </div>
-                    </div>
-                </div>
+            <div class="ui fluid inverted icon input">
+                <i class="search link icon"></i>
+                <input id="filtro" type="text" placeholder="Buscar por username...">
             </div>
         </div>
     </div>
     <div class="ui center aligned container">
-        <button class="ui large basic button" onclick="mostrarRoles()"><i class="tags green icon"></i>Roles</button>
-        <button class="ui large basic button" onclick="mostrarNuevo()"><i class="users green icon"></i>Usuarios</button>
-        <a href="/web/sesiones" class="ui large basic button"><i class="history green icon"></i>Sesiones</a>
+        <button class="ui black large button" onclick="mostrarNuevo()"><i class="users green icon"></i>Usuarios</button>
     </div>
     <div class="ui center aligned container" style="padding: 48px; padding-top: 64px">
-        <table class="ui celled very basic selectable table">
+        <table class="ui celled inverted very basic selectable table">
             <thead>
             <tr class="ui small header">
                 <th style="width: 30%">Username</th>
@@ -58,7 +44,7 @@
             <tfoot>
             <tr>
                 <th colspan="3">
-                    <div class="ui right floated pagination secondary menu" style="padding: 7px">
+                    <div class="ui right floated pagination secondary menu inverted" style="padding: 7px">
                         <a class="icon item" onclick="cargarUsuarios_anterior()">
                             <i class="left chevron icon"></i>
                         </a>
@@ -74,59 +60,34 @@
     </div>
 </div>
 <div class="ui center aligned container" style="padding: 28px; display: none" id="nuevo">
-    <h1 class="ui header text icon title green horizontal divider" style="padding: 16px"><i
-            class="add user grey icon"></i>Usuario Nuevo</h1>
+    <h1 class="ui header text inverted icon title grey horizontal divider" style="padding: 16px"><i
+            class="add user green icon"></i>Usuario Nuevo</h1>
     <div class="ui text container" style="padding: 20px">
         <div class="ui fluid labeled input">
-            <div class="ui basic label">Nombre</div>
+            <div class="ui label">Nombre</div>
             <input id="nombreNuevo" type="text" placeholder="Ingrese aqu&iacute; el nombre...">
         </div>
         <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Apellido</div>
+            <div class="ui label">Apellido</div>
             <input id="apellidoNuevo" type="text" placeholder="Ingrese aqu&iacute; el apellido...">
         </div>
         <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Username</div>
+            <div class="ui label">Username</div>
             <input id="usernameNuevo" type="text" placeholder="Ingrese aqu&iacute; el username...">
         </div>
         <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Email</div>
+            <div class="ui label">Email</div>
             <input id="emailNuevo" type="text" placeholder="Ingrese aqu&iacute; el email...">
         </div>
         <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Contrase&ntilde;a</div>
+            <div class="ui label">Contrase&ntilde;a</div>
             <input id="passwordNuevo" type="password" placeholder="Ingrese aqu&iacute; el contrase&ntilde;a...">
         </div>
-        <h3 class="ui horizontal divider sub header text green" style="padding: 16px">rol</h3>
-        <select id="rolSeleccionado" class="ui fluid dropdown"></select>
         <div class="row" style="padding: 30px">
             <button class="ui button" onclick="mostrarListado()"><i class="left arrow icon"></i>Volver al listado
             </button>
             <button class="ui positive button" onclick="registrarUsuario()"><i class="checkmark icon"></i>Confirmar
             </button>
-        </div>
-    </div>
-</div>
-<div class="ui center aligned container" style="padding: 28px; display: none" id="roles">
-    <h1 class="ui header text icon title green horizontal divider" style="padding: 16px"><i class="tags grey icon"></i>Rol
-        Nuevo</h1>
-    <div class="ui text container" style="padding: 20px">
-        <div class="ui fluid labeled input">
-            <div class="ui basic label">Nombre</div>
-            <input id="rolNuevo" type="text" placeholder="Ingrese aqu&iacute; el nombre...">
-        </div>
-        <div class="ui reply form" style="margin-top: 16px">
-            <div class="field">
-                <textarea id="descripcionNuevo" cols="30"
-                          style="min-height: 100px; max-width: 100%; min-width: 100%; max-height: 150px"
-                          maxlength="1024"
-                          placeholder="Escriba aqu&iacute; una descripci&oacute;n para el rol..."></textarea>
-            </div>
-        </div>
-        <div class="row" style="padding: 30px">
-            <button class="ui button" onclick="mostrarListadoRoles()"><i class="left arrow icon"></i>Volver al listado
-            </button>
-            <button class="ui positive button" onclick="crearRol()"><i class="checkmark icon"></i>Confirmar</button>
         </div>
     </div>
 </div>
@@ -208,8 +169,7 @@
 <script>
     $(document).ready(function () {
         $('.ui.dropdown').dropdown();
-        cargarRoles();
-        cargarUsuarios(1);
+        //cargarUsuarios(1);
     });
 
     function registrarUsuario() {
@@ -282,7 +242,9 @@
     function cargarUsuario(username) {
         if (username !== undefined) {
             mostrarLoaderDimmer();
-            $('.small.modal').modal({blurring: true}).modal('show');
+            $('.small.modal').modal({
+                blurring: true
+            }).modal('show');
             $.get("http://localhost:8080/web/api/usuarios/" + username, function (usuario) {
                 if (usuario !== undefined) {
                     setTimeout(function () {
@@ -344,49 +306,6 @@
         }
     }
 
-    function cargarRoles() {
-        $.get("http://localhost:8080/web/api/roles", function (response) {
-            if (response !== undefined) {
-                while (document.getElementById("rolSeleccionado").hasChildNodes()) {
-                    document.getElementById("rolSeleccionado").removeChild(document.getElementById("rolSeleccionado").lastChild);
-                }
-                while (document.getElementById("rolMod").hasChildNodes()) {
-                    document.getElementById("rolMod").removeChild(document.getElementById("rolMod").lastChild);
-                }
-                $.each(response, function (index, rol) {
-                    var option = document.createElement("option");
-                    option.value = rol.id;
-                    option.innerHTML = rol.name;
-                    document.getElementById("rolSeleccionado").appendChild(option);
-                    var option2 = document.createElement("option");
-                    option2.value = rol.id;
-                    option2.innerHTML = rol.name;
-                    document.getElementById("rolMod").appendChild(option2);
-                });
-                var option3 = document.createElement("option");
-                option3.value = "";
-                option3.innerHTML = "Seleccione un Rol para el usuario...";
-                document.getElementById("rolSeleccionado").appendChild(option3);
-            }
-        });
-    }
-
-    function crearRol() {
-        var nombre = document.getElementById("rolNuevo").value;
-        var descripcion = document.getElementById("descripcionNuevo").value;
-        $.post("http://localhost:8080/web/api/roles?nombre=" + nombre + "&descripcion=" + descripcion, function (response) {
-            if (response !== undefined) {
-                if (response === true) {
-                    document.getElementById("rolNuevo").value = "";
-                    document.getElementById("descripcionNuevo").value = "";
-                    cargarRoles();
-                    mostrarListadoRoles();
-                    mostrarExitoRol();
-                }
-            }
-        });
-    }
-
     function mostrarNuevo() {
         $('#listado').transition({
             animation: 'fade down',
@@ -405,48 +324,20 @@
         });
     }
 
-    function mostrarRoles() {
-        $('#listado').transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $('#roles').transition('fade up');
-            }
-        });
-    }
-
-    function mostrarListadoRoles() {
-        $('#roles').transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $('#listado').transition('fade up');
-            }
-        });
-    }
-
-    function mostrarExitoRol() {
-        $('#dimmer2').transition('fade');
-        document.getElementById("exitoRol").style.display = "block";
-        document.getElementById("exitoUsuario").style.display = "none";
-        document.getElementById("errorUsuario").style.display = "none";
-    }
-
     function mostrarExitoUsuario() {
         $('#dimmer2').transition('fade');
-        document.getElementById("exitoRol").style.display = "none";
         document.getElementById("exitoUsuario").style.display = "block";
         document.getElementById("errorUsuario").style.display = "none";
     }
 
     function mostrarErrorUsuario() {
         $('#dimmer2').transition('fade');
-        document.getElementById("exitoRol").style.display = "none";
         document.getElementById("exitoUsuario").style.display = "none";
         document.getElementById("errorUsuario").style.display = "block";
     }
 
     function ocultarDimmer() {
         $('#dimmer2').transition('fade');
-        document.getElementById("exitoRol").style.display = "none";
         document.getElementById("exitoUsuario").style.display = "none";
         document.getElementById("errorUsuario").style.display = "none";
     }
