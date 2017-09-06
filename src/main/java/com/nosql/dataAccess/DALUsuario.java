@@ -9,12 +9,13 @@ import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DALUsuario extends IDALUsuario {
+public class DALUsuario implements IDALUsuario {
 
     public DALUsuario() {
 
     }
 
+    @Override
     public boolean addUsuario(Usuario usu) {
         ODatabase db = null;
         try {
@@ -23,9 +24,9 @@ public class DALUsuario extends IDALUsuario {
             ODocument doc = new ODocument("Usuario");
             doc.field("nombre", usu.getNombre());
             doc.field("apellido", usu.getApellido());
-            doc.field("email", new ODocument(usu.getEmail())
-                    .field("password", usu.getPassword())
-                    .field("username", usu.getUsername());
+            doc.field("email", usu.getEmail());
+            doc.field("password", usu.getPassword());
+            doc.field("username", usu.getUsername());
 
             doc.save();
             db.commit();
@@ -37,6 +38,7 @@ public class DALUsuario extends IDALUsuario {
         }
     }
 
+    @Override
     public boolean updateUsuario(Usuario usu) {
         ODatabase db = null;
         try {
@@ -60,6 +62,7 @@ public class DALUsuario extends IDALUsuario {
         }
     }
 
+    @Override
     public boolean deleteUsuario(String username) {
         ODatabase db = null;
         try {
@@ -76,24 +79,26 @@ public class DALUsuario extends IDALUsuario {
         }
     }
 
+    @Override
     public Usuario getUsuario(String username) {
         ODatabaseDocumentTx database = new ODatabaseDocumentTx("plocal:/databases/lab1nosql");
         ODatabase db = database.activateOnCurrentThread().open("admin", "admin");
         ODocument od = (ODocument) db.query(new OSQLSynchQuery<ODocument>("SELECT FROM Usuario WHERE username=" + username)).get(0);
         return new Usuario(od.field("nombre"), od.field("apellido"), od.field("email"), od.field("password"), od.field("rid"));
     }
-
+    
     private ODocument getUsuario(ODatabase db, String username) {
         return (ODocument) db.query(new OSQLSynchQuery<ODocument>("SELECT FROM Usuario WHERE username=" + username)).get(0);
     }
 
-    public List<Usuario> getAllUsuarios(){
+    @Override
+    public List<Usuario> getAllUsuarios() {
         List<Usuario> ret = new ArrayList<>();
         ODatabaseDocumentTx database = new ODatabaseDocumentTx("plocal:/databases/lab1nosql");
         ODatabase db = database.activateOnCurrentThread().open("admin", "admin");
         for (ODocument od : database.browseClass("Usaurio")) {
             //ret.add(u.toJSON());
-            ret.add(new Usuario(od.field("nombre"), od.field("apellido"), od.field("email"), od.field("password"), od.field("rid"));
+            ret.add(new Usuario(od.field("nombre"), od.field("apellido"), od.field("email"), od.field("password"), od.field("rid")));
         }
         db.close();
         return ret;
