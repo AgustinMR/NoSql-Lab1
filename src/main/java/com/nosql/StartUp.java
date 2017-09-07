@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StartUp {
 
     public static void main(String args[]) throws Exception {
-        SpringApplication.run(StartUp.class, args);
         OServer server = OServerMain.create();
         server.startup(
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
@@ -34,7 +33,6 @@ public class StartUp {
             + "<entry name=\"server.cache.staticResources\" value=\"false\"/>"
             + "<entry name=\"log.console.level\" value=\"info\"/>"
             + "<entry name=\"log.file.level\" value=\"fine\"/>"
-            //The following is required to eliminate an error or warning "Error on resolving property: ORIENTDB_HOME"
             + "<entry name=\"plugin.dynamic\" value=\"false\"/>"
             + "</properties>" + "</orient-server>");
         server.activate();
@@ -42,6 +40,7 @@ public class StartUp {
         if (!db.exists()) db.create();
         if (db.isClosed()) db.open("admin", "admin");
         if (!db.getMetadata().getSchema().existsClass("Usuario")) db.getMetadata().getSchema().createClass("Usuario");
+        SpringApplication.run(StartUp.class, args);
     }
 
 }
