@@ -21,8 +21,8 @@ public class UsuarioController {
         return new DALUsuario().updateUsuario(new Usuario(nombre, apellido, email, password, username, rid));
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable(name = "username") String username) {
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public boolean delete(@RequestParam(name = "username") String username) {
         return new DALUsuario().deleteUsuario(username);
     }
 
