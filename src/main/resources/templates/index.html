@@ -1,175 +1,179 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Laboratorio1</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>NoSQL - Laboratorio1</title>
     <link rel="stylesheet" href="css/semantic.min.css">
     <script src="js/jquery.js"></script>
     <script src="js/semantic.min.js"></script>
 </head>
 
-<body style="background-color: #333333">
-<div class="ui secondary inverted menu">
-    <h3 class="ui header item"><i class="grey home icon"></i>Taller de Bases de datos noSql</h3>
-</div>
-<div id="listado">
-    <div class="ui text center aligned container">
-        <h1 class="ui header inverted text icon title grey horizontal divider" style="padding: 16px"><i
-                class="users green icon"></i>Listado de Usuarios</h1>
-    </div>
-    <div class="ui left aligned basic segment" style="padding: 16px; background-color: #272727">
-        <div class="ui text container">
-            <div class="ui fluid inverted icon input">
-                <i class="search link icon"></i>
-                <input id="filtro" type="text" placeholder="Buscar por username...">
-            </div>
+<body style="background-color: #F3F4F5">
+<div class="ui menu secondary top fixed" style="background-color: #e3e6e8; padding: 16px">
+    <div class="ui container">
+        <div class="ui icon search input">
+            <i class="search link icon" onclick="cargarUsuarios(1)"></i>
+            <input type="text" id="filtro" placeholder="Buscar por username...">
         </div>
-    </div>
-    <div class="ui center aligned container">
-        <button class="ui black large button" onclick="mostrarNuevo()"><i class="users green icon"></i>Usuarios</button>
-    </div>
-    <div class="ui center aligned container" style="padding: 48px; padding-top: 64px">
-        <table class="ui celled inverted very basic selectable table">
-            <thead>
-            <tr class="ui small header">
-                <th style="width: 30%">Username</th>
-                <th>Email</th>
-                <th style="width: 20%">Rol</th>
-            </tr>
-            </thead>
-            <tbody id="usuariosList"></tbody>
-            <tfoot>
-            <tr>
-                <th colspan="3">
-                    <div class="ui right floated pagination secondary menu inverted" style="padding: 7px">
-                        <a class="icon item" onclick="cargarUsuarios_anterior()">
-                            <i class="left chevron icon"></i>
-                        </a>
-                        <a id="pag" class="disabled item header">1</a>
-                        <a class="icon item" onclick="cargarUsuarios_siguiente()">
-                            <i class="right chevron icon"></i>
-                        </a>
-                    </div>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
-</div>
-<div class="ui center aligned container" style="padding: 28px; display: none" id="nuevo">
-    <h1 class="ui header text inverted icon title grey horizontal divider" style="padding: 16px"><i
-            class="add user green icon"></i>Usuario Nuevo</h1>
-    <div class="ui text container" style="padding: 20px">
-        <div class="ui fluid labeled input">
-            <div class="ui label">Nombre</div>
-            <input id="nombreNuevo" type="text" placeholder="Ingrese aqu&iacute; el nombre...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui label">Apellido</div>
-            <input id="apellidoNuevo" type="text" placeholder="Ingrese aqu&iacute; el apellido...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui label">Username</div>
-            <input id="usernameNuevo" type="text" placeholder="Ingrese aqu&iacute; el username...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui label">Email</div>
-            <input id="emailNuevo" type="text" placeholder="Ingrese aqu&iacute; el email...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui label">Contrase&ntilde;a</div>
-            <input id="passwordNuevo" type="password" placeholder="Ingrese aqu&iacute; el contrase&ntilde;a...">
-        </div>
-        <div class="row" style="padding: 30px">
-            <button class="ui button" onclick="mostrarListado()"><i class="left arrow icon"></i>Volver al listado
-            </button>
-            <button class="ui positive button" onclick="registrarUsuario()"><i class="checkmark icon"></i>Confirmar
+        <div class="right menu">
+            <button class="ui blue button" id="nuevoBtn" onclick="mostrarNuevo()"><i class="add user icon"></i>Crear
+                Usuario
             </button>
         </div>
     </div>
 </div>
-<div class="ui active page dimmer" id="dimmer2" style="display: none">
+<div class="ui container" id="listado" style="padding-top: 70px; padding-bottom: 64px">
+    <table class="ui selectable very basic table" style="padding: 24px">
+        <thead>
+        <tr>
+            <td class="ui header grey center aligned">@Rid</td>
+            <td class="ui header grey center aligned">Username</td>
+            <td class="ui header grey center aligned">Email</td>
+            <td class="ui header grey center aligned">Nombre</td>
+            <td class="ui header grey center aligned">Apellido</td>
+        </tr>
+        </thead>
+        <tbody id="usuariosList"></tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">
+                <div class="ui right floated pagination secondary menu" style="padding: 10px">
+                    <a class="icon item" onclick="cargarUsuarios_anterior()">
+                        <i class="left  chevron icon"></i>
+                    </a>
+                    <a id="pag" class="disabled item header">1</a>
+                    <a class="icon item" onclick="cargarUsuarios_siguiente()">
+                        <i class="right chevron icon"></i>
+                    </a>
+                </div>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="ui center aligned container" id="nueva" style="display: none; padding-top: 32px; padding-bottom: 0px">
+    <div class="ui center aligned text container" style="padding: 70px; margin: 0px; padding-bottom: 32px">
+        <h2 class="ui grey large header" style="padding: 16px">Usuario Nuevo</h2>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Nombre</div>
+            <input type="text" id="nombreNuevo" placeholder="Ingrese el nombre del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Apellido</div>
+            <input type="text" id="apellidoNuevo" placeholder="Ingrese el apellido del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Email</div>
+            <input type="email" id="emailNuevo" placeholder="Ingrese el email del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Username</div>
+            <input type="text" id="usernameNuevo" placeholder="Ingrese username o nombre de usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Password</div>
+            <input type="password" id="passwordNuevo" placeholder="Ingrese password...">
+        </div>
+    </div>
+    <div class="ui basic secondary center aligned segment" style="margin: 0px; padding: 16px">
+        <button class="ui large button" onclick="mostrarListado()"><i class="left angle icon"></i>Volver</button>
+        <button class="ui green large button" onclick="registrarUsuario()"><i class="checkmark icon"></i>Confirmar
+        </button>
+    </div>
+</div>
+<div class="ui center aligned container" id="mod" style="display: none; padding-top: 32px; padding-bottom: 0px">
+    <div class="ui center aligned text container" style="padding: 70px; margin: 0px; padding-bottom: 32px">
+        <h2 class="ui grey large header" style="padding: 16px">Modificar Usuario</h2>
+        <h2 class="ui header">@Rid: <span class="ui header small grey" id="ridActual"></span></h2>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Nombre</div>
+            <input type="text" id="nombreMod" placeholder="Ingrese el nombre del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Apellido</div>
+            <input type="text" id="apellidoMod" placeholder="Ingrese el apellido del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Email</div>
+            <input type="email" id="emailMod" placeholder="Ingrese el email del usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Username</div>
+            <input type="text" id="usernameMod" placeholder="Ingrese username o nombre de usuario...">
+        </div>
+        <div class="ui fluid labeled input" style="margin-top: 16px">
+            <div class="ui basic label">Password</div>
+            <input type="password" id="passwordMod" placeholder="Ingrese password...">
+        </div>
+    </div>
+    <div class="ui basic secondary center aligned segment" style="margin: 0px; padding: 16px">
+        <div class="ui buttons">
+            <button class="ui large button" onclick="mostrarListadoMod()"><i class="left blue angle icon"></i>Volver
+            </button>
+            <button class="ui button large" id="eliminarBtn"><i class="trash red icon"></i>Eliminar</button>
+            <button class="ui large button" onclick="modificarUsuario()"><i class="save green icon"></i>Guardar cambios</button>
+        </div>
+    </div>
+    <div class="ui segments raised popup bottom left pointing transition hidden" id="popup"
+         style="max-width: 400px; width: 370px; padding: 0px;">
+        <div class="ui center aligned red segment" style="background-color: #fafafa">
+            <h2 class="ui header grey">Se eliminar&aacute; el usuario.</h2>
+            <h3 class="ui header red large">&iquest;Confirmar?</h3>
+        </div>
+        <div class="ui segment center aligned" style="padding: 7px">
+            <button class="ui basic big button item"><i class="trash red icon"></i>Confirmar</button>
+        </div>
+    </div>
+</div>
+<div class="ui page dimmer" id="dimmerCrear">
     <div class="content">
         <div class="center">
-            <div class="row" id="exitoRol" style="display: none">
-                <h1 class="ui header inverted text">Rol creado correctamente!</h1>
-                <button class="ui icon button circular inverted large green" onclick="ocultarDimmer()"><i
-                        class="checkmark large icon"></i></button>
-            </div>
-            <div class="row" id="exitoUsuario" style="display: none">
-                <h1 class="ui header inverted text">Usuario ingresado correctamente!</h1>
-                <button class="ui icon button circular inverted large green" onclick="ocultarDimmer()"><i
-                        class="checkmark large icon"></i></button>
-            </div>
-            <div class="row" id="errorUsuario" style="display: none">
-                <h1 class="ui header inverted text">No se ha podido ingresar el usuario.</h1>
-                <button class="ui icon button circular inverted large red" onclick="ocultarDimmer()"><i
-                        class="warning large icon"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui small modal">
-    <div class="ui icon header green"><i class="user circle outline black icon"></i><span id="usernameMod"></span></div>
-    <div class="content">
-        <div class="ui inverted active loading dimmer" style="display: block" id="dimmer">
-            <div class="content">
-                <div class="center">
-                    <div class="ui text loader large" id="loaderM" style="display: block">Cargando
-                        informaci&oacute;n...
-                    </div>
-                    <div class="ui blurring basic segment" id="confirmation" style="display: none">
-                        <h2 class="ui header text">Se eliminar&aacute; el usuario <span
-                                class="ui green text header small" id="usuarioActual"></span>.</h2>
-                        <h3 class="ui header text grey">&iquest;Confirmar?</h3>
-                        <button class="ui button" onclick="ocultarDimmerModal()">Cancelar</button>
-                        <button class="ui black button" onclick="eliminarUsuario()">Eliminar</button>
-                    </div>
-                    <div class="ui blurring basic segment" id="exitoDel" style="display: none">
-                        <h2 class="ui header text">El usuario ha sido eliminado.</h2>
-                        <button class="ui icon circular button inverted green large" onclick="ocultarDimmerModal()"><i
-                                class="checkmark icon large"></i></button>
-                    </div>
-                    <div class="ui blurring basic segment" id="exitoMod" style="display: none">
-                        <h2 class="ui header text">Informaci&oacute;n actualizada correctamente!</h2>
-                        <button class="ui icon circular button inverted green large" onclick="ocultarDimmerModal()"><i
-                                class="checkmark icon large"></i></button>
+            <div class="ui basic segment" style="background-color: #e3e6e8">
+                <div class="ui center aligned text container">
+                    <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
+                            class="checkmark icon green" style="margin: 0px"></i>Usuario creado correctamente!
                     </div>
                 </div>
             </div>
         </div>
-        <div class="ui fluid labeled input">
-            <div class="ui basic label">Nombre</div>
-            <input id="nombreMod" type="text" placeholder="Ingrese aqu&iacute; el nombre del usuario...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Apellido</div>
-            <input id="apellidoMod" type="text" placeholder="Ingrese aqu&iacute; el apellido del usuario...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Email</div>
-            <input id="emailMod" type="text" placeholder="Ingrese aqu&iacute; el email del usuario...">
-        </div>
-        <div class="ui fluid labeled input" style="margin-top: 16px">
-            <div class="ui basic label">Contrase&ntilde;a</div>
-            <input id="passwordMod" type="password" placeholder="Ingrese aqu&iacute; una contrase&ntilde;a..">
-        </div>
-        <div class="row" style="margin-top: 16px"><select id="rolMod" class="ui fluid dropdown"></select></div>
     </div>
-    <div class="footer">
-        <div class="ui secondary basic right aligned segment">
-            <div class="ui cancel red inverted button" onclick="mostrarConfirmacion()">Eliminar</div>
-            <div class="ui approve positive button" onclick="modificarUsuario()">Guardar cambios</div>
+</div>
+<div class="ui page dimmer" id="dimmerMod">
+    <div class="content">
+        <div class="center">
+            <div class="ui basic segment" style="background-color: #e3e6e8">
+                <div class="ui center aligned text container">
+                    <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
+                            class="checkmark icon green" style="margin: 0px"></i>Usuario modificado correctamente!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui page dimmer" id="dimmerDel">
+    <div class="content">
+        <div class="center">
+            <div class="ui basic segment" style="background-color: #e3e6e8">
+                <div class="ui center aligned text container">
+                    <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
+                            class="checkmark icon green" style="margin: 0px"></i>Usuario eliminado correctamente!
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        $('.ui.dropdown').dropdown();
-        //cargarUsuarios(1);
+        $('#eliminarBtn').popup({
+            popup: $('#popup'),
+            on: 'click'
+        });
+        cargarUsuarios(1);
     });
 
     function registrarUsuario() {
@@ -178,19 +182,17 @@
         var username = document.getElementById("usernameNuevo").value;
         var email = document.getElementById("emailNuevo").value;
         var password = document.getElementById("passwordNuevo").value;
-        var rol = document.getElementById("rolSeleccionado").value;
-        if (rol !== undefined && username !== undefined && username !== "") {
-            $.post("http://localhost:8080/web/api/usuarios?nombre=" + nombre + "&apellido=" + apellido + "&username=" + username + "&email=" + email + "&password=" + password + "&rol=" + rol, function (response) {
+        if (username !== undefined && username !== "") {
+            $.post("http://localhost:8080/usuarios", "nombre=" + nombre + "&apellido=" + apellido + "&username=" + username + "&email=" + email + "&password=" + password, function (response) {
                 if (response !== undefined) {
-                    if (response === true) {
+                    if (response === true || response === "true") {
+                        mostrarListado();
                         document.getElementById("nombreNuevo").value = "";
                         document.getElementById("apellidoNuevo").value = "";
                         document.getElementById("usernameNuevo").value = "";
                         document.getElementById("emailNuevo").value = "";
                         document.getElementById("passwordNuevo").value = "";
-                        document.getElementById("rolSeleccionado").value = "";
-                        mostrarListado();
-                        mostrarExitoUsuario();
+                        mostrarExitoCrear();
                         cargarUsuarios(1);
                     }
                 }
@@ -223,39 +225,36 @@
         var email = document.getElementById("emailMod").value;
         var password = document.getElementById("passwordMod").value;
         var username = document.getElementById("usernameMod").innerHTML;
-        var rol = document.getElementById("rolMod").value;
-        var params = "username=" + username + "&nombre=" + nombre + "&apellido=" + apellido + "&email=" + email + "&password=" + password + "&rol=" + rol;
-        $.ajax({
-            url: 'http://localhost:8080/web/api/usuarios?' + params,
-            type: 'PUT',
-            success: function (response) {
-                if (response !== undefined) {
-                    if (response === true || response === true) {
-                        cargarUsuarios(1);
-                        mostrarExitoMod();
+        var rid = document.getElementById("ridActual").innerHTML;
+        var params = "username=" + username + "&nombre=" + nombre + "&apellido=" + apellido + "&email=" + email + "&password=" + password + "&rid=" + rid;
+        if(rid !== undefined && rid !== ""){
+            $.ajax({
+                url: 'http://localhost:8080/usuarios',
+                type: 'PUT',
+                data: params,
+                success: function (response) {
+                    if (response !== undefined) {
+                        if (response === true || response === "true") {
+                            cargarUsuarios(1);
+                            mostrarExitoMod();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     function cargarUsuario(username) {
         if (username !== undefined) {
-            mostrarLoaderDimmer();
-            $('.small.modal').modal({
-                blurring: true
-            }).modal('show');
-            $.get("http://localhost:8080/web/api/usuarios/" + username, function (usuario) {
+            $.get("http://localhost:8080/usuarios/" + username, function (usuario) {
                 if (usuario !== undefined) {
-                    setTimeout(function () {
-                        document.getElementById("nombreMod").value = usuario.name;
-                        document.getElementById("apellidoMod").value = usuario.lastname;
-                        document.getElementById("emailMod").value = usuario.email;
-                        document.getElementById("passwordMod").value = usuario.password;
-                        document.getElementById("usernameMod").innerHTML = usuario.username;
-                        document.getElementById("rolMod").value = usuario.roleid.id;
-                        ocultarDimmerModal();
-                    }, 600);
+                    mostrarMod();
+                    document.getElementById("nombreMod").value = usuario.nombre;
+                    document.getElementById("apellidoMod").value = usuario.apellido;
+                    document.getElementById("emailMod").value = usuario.email;
+                    document.getElementById("passwordMod").value = usuario.password;
+                    document.getElementById("usernameMod").value = usuario.username;
+                    document.getElementById("ridActual").innerHTML = usuario.rid;
                 }
             });
         }
@@ -266,13 +265,14 @@
         if (pag === undefined) {
             pag = 1;
         }
-        $.get("http://localhost:8080/web/api/usuarios?filtro=" + filtro + "&pagina=" + pag, function (response) {
+        $.get("http://localhost:8080/usuarios?filtro=" + filtro + "&pagina=" + pag, function (response) {
             if (response !== undefined) {
                 while (document.getElementById("usuariosList").hasChildNodes()) {
                     document.getElementById("usuariosList").removeChild(document.getElementById("usuariosList").lastChild);
                 }
                 $.each(response, function (index, usuario) {
                     var tr = document.createElement("tr");
+                    tr.className = "ui center aligned header very small";
                     tr.addEventListener("dblclick", function () {
                         cargarUsuario(usuario.username);
                     });
@@ -281,10 +281,16 @@
                     var td2 = document.createElement("td");
                     td2.innerHTML = usuario.email;
                     var td3 = document.createElement("td");
-                    td3.innerHTML = usuario.roleid.name;
+                    td3.innerHTML = usuario.nombre;
+                    var td4 = document.createElement("td");
+                    td4.innerHTML = usuario.apellido;
+                    var td5 = document.createElement("td");
+                    td5.innerHTML = usuario.rid;
+                    tr.appendChild(td5);
                     tr.appendChild(td1);
                     tr.appendChild(td2);
                     tr.appendChild(td3);
+                    tr.appendChild(td4);
                     document.getElementById("usuariosList").appendChild(tr);
                 });
             }
@@ -306,82 +312,64 @@
         }
     }
 
-    function mostrarNuevo() {
-        $('#listado').transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $('#nuevo').transition('fade up');
-            }
-        });
-    }
-
-    function mostrarListado() {
-        $('#nuevo').transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $('#listado').transition('fade up');
-            }
-        });
-    }
-
-    function mostrarExitoUsuario() {
-        $('#dimmer2').transition('fade');
-        document.getElementById("exitoUsuario").style.display = "block";
-        document.getElementById("errorUsuario").style.display = "none";
-    }
-
-    function mostrarErrorUsuario() {
-        $('#dimmer2').transition('fade');
-        document.getElementById("exitoUsuario").style.display = "none";
-        document.getElementById("errorUsuario").style.display = "block";
-    }
-
-    function ocultarDimmer() {
-        $('#dimmer2').transition('fade');
-        document.getElementById("exitoUsuario").style.display = "none";
-        document.getElementById("errorUsuario").style.display = "none";
+    function mostrarExitoCrear() {
+        $('#dimmerCrear').dimmer({
+            opacity: 0.2
+        }).dimmer('show');
     }
 
     function mostrarExitoMod() {
-        $('#dimmer').transition('fade');
-        document.getElementById("loaderM").style.display = "none";
-        document.getElementById("exitoDel").style.display = "none";
-        document.getElementById("exitoMod").style.display = "block";
-        document.getElementById("confirmation").style.display = "none";
+        $('#dimmerMod').dimmer({
+            opacity: 0.2
+        }).dimmer('show');
     }
 
     function mostrarExitoDel() {
-        $('#dimmer').transition('fade');
-        document.getElementById("loaderM").style.display = "none";
-        document.getElementById("exitoDel").style.display = "block";
-        document.getElementById("exitoMod").style.display = "none";
-        document.getElementById("confirmation").style.display = "none";
+        $('#dimmerDel').dimmer({
+            opacity: 0.2
+        }).dimmer('show');
     }
 
-    function mostrarLoaderDimmer() {
-        $('#dimmer').transition('fade');
-        document.getElementById("loaderM").style.display = "block";
-        document.getElementById("exitoDel").style.display = "none";
-        document.getElementById("exitoMod").style.display = "none";
-        document.getElementById("confirmation").style.display = "none";
+    function mostrarNuevo() {
+        $('#listado').transition({
+            animation: 'fade',
+            onComplete: function () {
+                $('#nueva').transition('fade');
+            }
+        });
+        $('#nuevoBtn').transition('fade');
     }
 
-    function mostrarConfirmacion() {
-        document.getElementById("usuarioActual").innerHTML = document.getElementById("usernameMod").innerHTML;
-        $('#dimmer').transition('fade');
-        document.getElementById("loaderM").style.display = "none";
-        document.getElementById("exitoDel").style.display = "none";
-        document.getElementById("exitoMod").style.display = "none";
-        document.getElementById("confirmation").style.display = "block";
+    function mostrarListado() {
+        $('#nueva').transition({
+            animation: 'fade',
+            onComplete: function () {
+                $('#listado').transition('fade');
+            }
+        });
+        $('#nuevoBtn').transition('fade');
     }
 
-    function ocultarDimmerModal() {
-        $('#dimmer').transition('fade');
-        document.getElementById("loaderM").style.display = "none";
-        document.getElementById("exitoDel").style.display = "none";
-        document.getElementById("exitoMod").style.display = "none";
-        document.getElementById("confirmation").style.display = "none";
+    function mostrarMod() {
+        $('#listado').transition({
+            animation: 'fade',
+            onComplete: function () {
+                $('#mod').transition('fade');
+            }
+        });
+        $('#nuevoBtn').transition('fade');
+    }
+
+    function mostrarListadoMod() {
+        $('#mod').transition({
+            animation: 'fade',
+            onComplete: function () {
+                $('#listado').transition('fade');
+            }
+        });
+        $('#nuevoBtn').transition('fade');
     }
 </script>
 </body>
+
 </html>
