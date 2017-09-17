@@ -124,7 +124,7 @@
             <h3 class="ui header red large">&iquest;Confirmar?</h3>
         </div>
         <div class="ui segment center aligned" style="padding: 7px">
-            <button class="ui basic big button item"><i class="trash red icon"></i>Confirmar</button>
+            <button class="ui basic big button item" onclick="eliminarUsuario()"><i class="trash red icon"></i>Confirmar</button>
         </div>
     </div>
 </div>
@@ -201,17 +201,19 @@
     }
 
     function eliminarUsuario() {
-        var username = document.getElementById("usuarioActual").innerHTML;
+        var username = document.getElementById("usernameMod").value;
         if (username !== undefined && username !== "") {
-            var url = "http://localhost:8080/web/api/usuarios/" + username;
+            var url = "http://localhost:8080/usuarios?username=" + username;
             $.ajax({
                 url: url,
                 type: 'DELETE',
                 success: function (response) {
                     if (response !== undefined) {
                         if (response === true || response === "true") {
+                            $('#eliminarBtn').popup('hide');
                             cargarUsuarios(1);
                             mostrarExitoDel();
+                            mostrarListadoMod();
                         }
                     }
                 }
@@ -237,6 +239,7 @@
                         if (response === true || response === "true") {
                             cargarUsuarios(1);
                             mostrarExitoMod();
+                            mostrarListadoMod();
                         }
                     }
                 }
