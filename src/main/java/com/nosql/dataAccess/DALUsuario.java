@@ -74,7 +74,7 @@ public class DALUsuario implements IDALUsuario {
         try {
             ODatabaseDocumentTx database = new ODatabaseDocumentTx("plocal:/databases/lab1nosql");
             db = database.activateOnCurrentThread().open("admin", "admin");
-            ODocument u = getUsuario(db, username);
+            ODocument u = ((List<ODocument>)db.command(new OSQLSynchQuery<ODocument>("SELECT FROM Usuario WHERE username = ?")).execute(username)).get(0);
             u.delete();
             db.commit();
             db.close();
