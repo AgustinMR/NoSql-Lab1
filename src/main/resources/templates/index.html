@@ -114,7 +114,8 @@
             <button class="ui large button" onclick="mostrarListadoMod()"><i class="left blue angle icon"></i>Volver
             </button>
             <button class="ui button large" id="eliminarBtn"><i class="trash red icon"></i>Eliminar</button>
-            <button class="ui large button" onclick="modificarUsuario()"><i class="save green icon"></i>Guardar cambios</button>
+            <button class="ui large button" onclick="modificarUsuario()"><i class="save green icon"></i>Guardar cambios
+            </button>
         </div>
     </div>
     <div class="ui segments raised popup bottom left pointing transition hidden" id="popup"
@@ -128,36 +129,24 @@
         </div>
     </div>
 </div>
-<div class="ui page dimmer" id="dimmerCrear">
+<div class="ui page dimmer" id="dimmer">
     <div class="content">
         <div class="center">
-            <div class="ui basic segment" style="background-color: #e3e6e8">
+            <div class="ui basic segment" id="crear" style="background-color: #e3e6e8; display: none;">
                 <div class="ui center aligned text container">
                     <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
                             class="checkmark icon green" style="margin: 0px"></i>Usuario creado correctamente!
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="ui page dimmer" id="dimmerMod">
-    <div class="content">
-        <div class="center">
-            <div class="ui basic segment" style="background-color: #e3e6e8">
+            <div class="ui basic segment" id="modificar" style="background-color: #e3e6e8; display: none">
                 <div class="ui center aligned text container">
                     <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
                             class="checkmark icon green" style="margin: 0px"></i>Usuario modificado correctamente!
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="ui page dimmer" id="dimmerDel">
-    <div class="content">
-        <div class="center">
-            <div class="ui basic segment" style="background-color: #e3e6e8">
+            <div class="ui basic segment" id="eliminar" style="background-color: #e3e6e8; display: none">
                 <div class="ui center aligned text container">
                     <div class="ui icon header large grey" style="margin-bottom: 0px; padding: 16px"><i
                             class="checkmark icon green" style="margin: 0px"></i>Usuario eliminado correctamente!
@@ -211,6 +200,7 @@
                     if (response !== undefined) {
                         if (response === true || response === "true") {
                             cargarUsuarios(1);
+                            mostrarListadoMod();
                             mostrarExitoDel();
                         }
                     }
@@ -227,7 +217,7 @@
         var username = document.getElementById("usernameMod").value;
         var rid = document.getElementById("ridActual").innerHTML;
         var params = "username=" + username + "&nombre=" + nombre + "&apellido=" + apellido + "&email=" + email + "&password=" + password + "&rid=" + rid;
-        if(rid !== undefined && rid !== ""){
+        if (rid !== undefined && rid !== "") {
             $.ajax({
                 url: 'http://localhost:8080/usuarios',
                 type: 'PUT',
@@ -236,6 +226,7 @@
                     if (response !== undefined) {
                         if (response === true || response === "true") {
                             cargarUsuarios(1);
+                            mostrarListadoMod();
                             mostrarExitoMod();
                         }
                     }
@@ -313,20 +304,32 @@
     }
 
     function mostrarExitoCrear() {
-        $('#dimmerCrear').dimmer({
-            opacity: 0.2
+        $('#dimmer').dimmer({
+            opacity: 0.2,
+            closable: true
         }).dimmer('show');
+        document.getElementById("crear").style.display = "block";
+        document.getElementById("modificar").style.display = "none";
+        document.getElementById("eliminar").style.display = "none";
     }
 
     function mostrarExitoMod() {
-        $('#dimmerMod').dimmer({
-            opacity: 0.2
+        document.getElementById("crear").style.display = "none";
+        document.getElementById("modificar").style.display = "block";
+        document.getElementById("eliminar").style.display = "none";
+        $('#dimmer').dimmer({
+            opacity: 0.2,
+            closable: true
         }).dimmer('show');
     }
 
     function mostrarExitoDel() {
-        $('#dimmerDel').dimmer({
-            opacity: 0.2
+        document.getElementById("crear").style.display = "none";
+        document.getElementById("modificar").style.display = "none";
+        document.getElementById("eliminar").style.display = "block";
+        $('#dimmer').dimmer({
+            opacity: 0.2,
+            closable: true
         }).dimmer('show');
     }
 
