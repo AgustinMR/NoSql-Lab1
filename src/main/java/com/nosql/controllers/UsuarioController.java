@@ -17,8 +17,8 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public boolean update(@RequestParam(name = "username") String username, @RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellido") String apellido, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
-        return new DALUsuario().updateUsuario(new Usuario(nombre, apellido, email, password, username));
+    public boolean update(@RequestParam(name = "username") String username, @RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellido") String apellido, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password, @RequestParam(name = "rid") String rid) {
+        return new DALUsuario().updateUsuario(new Usuario(nombre, apellido, email, password, username, rid));
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
@@ -31,13 +31,9 @@ public class UsuarioController {
         return new DALUsuario().getUsuario(username);
     }
 
-    /*@RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Usuario> findAll(@RequestParam(name = "filtro") String filtro, @RequestParam(name = "pagina") int pagina){
-        return null;
-    }*/
-
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Usuario> findAll() {
-        return new DALUsuario().getAllUsuarios();
+    public List<Usuario> findAll(@RequestParam(name = "filtro") String filtro, @RequestParam(name = "pagina", defaultValue = "1") int pagina){
+        return new DALUsuario().getAllUsuarios(filtro, pagina);
     }
+
 }
